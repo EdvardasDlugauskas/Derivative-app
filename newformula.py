@@ -1,47 +1,70 @@
-from sympy import *
+import sympy
+from decimal import Decimal
+
+
+DELTA_PREFIX = "d_"
+
 
 def partial_derivatives(expression, all_symbols):
     lst = []
-    for symb in all_symbols:
-        lst.append(diff(expression, symb))
+    for sympy_symb in all_symbols:
+        lst.append(sympy.diff(expression, sympy_symb))
 
     return lst
 
-def indirect_observation_error(isvestines, deltas):
-    answ = sqrt(sum((isvestine*delta)**2 for isvestine, delta in zip(isvestines, deltas)))
-    return answ
 
-while True:
-    try:
-        formula = S(input("Enter your formula: "))
-    except SyntaxError as e:
-        print("Could not understand formula:", e)
-        continue
+def indirect_observation_error(derivatives, deltas):
+    answer = sympy.sqrt(sum((derivative * delta) ** 2 for derivative, delta in zip(derivatives, deltas)))
+    return answer
 
+
+def smallest(values):
+    return min([Decimal(str(x)).as_tuple().exponent for x in values]) * -1
+
+def all_delta_nondelta(expression):
     non_delta_symb = []
     delta_symb = []
-    for x in formula.atoms(Symbol):
+    for x in sympy.S(expression).atoms(sympy.Symbol):
         non_delta_symb.append(x)
-        delta_symb.append(Symbol("d_" + str(x)))
+        delta_symb.append(sympy.Symbol(DELTA_PREFIX + str(x)))
 
     all_symb = non_delta_symb + delta_symb
 
-    three_derivs = partial_derivatives(formula, non_delta_symb)
-    with_deltas = indirect_observation_error(three_derivs, delta_symb)
+    return all_symb, delta_symb, non_delta_symb
 
-    subs = {}
-    for symb in all_symb:
-        value = input("Enter value for " + str(symb) + ": ").replace(",", ".")
-        subs[symb] = value
+if __name__ == "__main__":
+    while True:
+        try:
+            formula = sympy.S(input("Enter your formula: "))
+        except SyntaxError as e:
+            print("Could not understand formula:", e)
+            continue
 
-    pprint(with_deltas)
-    result = with_deltas.subs(subs)
-    print()
-    try:
-        print('Answ: {0:.20f}'.format(result))
-    except TypeError as e:
-        print("Could not get an answer. Did you enter everything correctly? Please try again")
-    print()
+        non_delta_symb = []
+        delta_symb = []
+        for x in formula.atoms(sympy.Symbol):
+            non_delta_symb.append(x)
+            delta_symb.append(sympy.Symbol(DELTA_PREFIX + str(x)))
+
+        all_symb = non_delta_symb + delta_symb
+
+        three_derivs = partial_derivatives(formula, non_delta_symb)
+        with_deltas = indirect_observation_error(three_derivs, delta_symb)
+
+        subs = {}
+        for sympy_symbol in all_symb:
+            value = input("Enter value for " + str(sympy_symbol) + ": ").replace(",", ".")
+            subs[sympy_symbol] = value
+
+        sympy.pprint(with_deltas)
+        result = with_deltas.subs(subs).evalf()
+        print()
+        try:
+            print('The indirect observation error is: {0:.20f}'.format(result))
+        except TypeError as e:
+            print(result)
+            print("Could not get a number as an answer. Did you enter everything correctly?")
+        print()
 
 
 

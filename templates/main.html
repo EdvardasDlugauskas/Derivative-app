@@ -1,0 +1,35 @@
+<!doctype html>
+<head>
+    <title>Calculation</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class=page>
+    <h1>Partial Derivative Calculator</h1>
+    <br>
+    <p>Enter your formula: </p>
+    <form method="POST">
+        <input type="text" name="expression" value={{ expression }}>
+        # if variables:
+        <p>Please enter extra info: </p>
+        <ul>
+            # for variable in variables:
+            <a>{{ variable }}</a>
+            <input type="text" name={{ variable }} value={{ values[variable] }}>
+            <br>
+            # endfor
+        </ul>
+        # endif
+        <input type="submit" value="Submit">
+
+        # if error:
+        <p class=error><strong>Error:</strong> {{ error }} </p>
+        # endif
+
+        # if result is not none:
+        <p>
+            <label name='answer'>Answer is: {{ answer }}</label>
+        </p>
+        # endif
+    </form>
+</div>
