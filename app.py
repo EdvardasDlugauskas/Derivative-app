@@ -15,6 +15,8 @@ def application():
     answer = None
     error = ""
     all_symb = []
+    delta_symb = []
+    pretty = ''
 
     subs = {}
     derivatives = []
@@ -30,11 +32,12 @@ def application():
         try:
             subs = {smb: request.form[str(smb)] for smb in all_symb}
             with_deltas = indirect_observation_error(derivatives, delta_symb)
+            pretty = sympy.printing.pretty(with_deltas, use_unicode=True)
             answer = with_deltas.subs(subs).evalf()
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
-    return render_template('main.html', expression=expression, values=subs,
+    return render_template('main.html', expression=expression, values=subs, pretty=pretty,
                            answer=answer, variables=all_symb, error=error)
 
 

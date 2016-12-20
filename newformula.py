@@ -2,7 +2,7 @@ import sympy
 from decimal import Decimal
 
 
-DELTA_PREFIX = "d_"
+DELTA_PREFIX = "Δ"
 
 
 def partial_derivatives(expression, all_symbols):

@@ -16,7 +16,8 @@
             # for variable in variables:
             <a>{{ variable }}</a>
             <input type="text" name={{ variable }} value={{ values[variable] }}>
-            <br>
+            <br />
+            <br />
             # endfor
         </ul>
         # endif
@@ -25,11 +26,13 @@
         # if error:
         <p class=error><strong>Error:</strong> {{ error }} </p>
         # endif
+    </form>
 
-        # if result is not none:
+    # if result is not none:
         <p>
             <label name='answer'>Answer is: {{ answer }}</label>
-        </p>
-        # endif
-    </form>
+            <br />
+            <pre>{{ pretty }}</pre>
+        <p/>
+    # endif
 </div>
