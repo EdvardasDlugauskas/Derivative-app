@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sympy
 from decimal import Decimal
 
