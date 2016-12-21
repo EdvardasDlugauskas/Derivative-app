@@ -4,9 +4,23 @@ h1, h2          { font-family: 'Georgia', serif; margin: 0; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
 
-
+/*
 pre {
 	font-family: monospace;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 18.5667px;
+}*/
+
+@font-face {
+	font-family: "Dejavu Sans";
+	src: url("../static/DejaVuSansMono.ttf")
+}
+
+pre {
+	font-family: monospace, Dejavu Sans;
 	font-size: 13px;
 	font-style: normal;
 	font-variant: normal;

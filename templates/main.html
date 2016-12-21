@@ -9,7 +9,9 @@
     <br>
     <p>Enter your formula: </p>
     <form method="POST">
-        <input type="text" name="expression" value={{ expression }}>
+        <label>
+            <input type="text" name="expression" value={{ expression }}>
+        </label>
         # if variables:
         <p>Please enter extra info: </p>
         <ul>
@@ -28,11 +30,11 @@
         # endif
     </form>
 
-    # if result is not none:
-        <p>
-            <label name='answer'>Answer is: {{ answer }}</label>
-            <br />
-            <pre>{{ pretty }}</pre>
-        <p/>
+    # if pretty:
+    <p><pre>{{ pretty }}</pre></p>
+    # endif
+
+    # if answer is not none:
+    <p><label name='answer'>Answer is: {{ answer }}</label><br /></p>
     # endif
 </div>
