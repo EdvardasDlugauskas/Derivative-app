@@ -1,7 +1,7 @@
 # Derivative-app
+A web app made with Flask, gunicorn, and Sympy which allows to calculate the formula and value of your expression using partial derivative formula. 
 
-## Overview
-This is a web app made with Flask, gunicorn, and Sympy which allows to calculate the formula and value of your expression using partial derivative formula. You enter your expression and the app shows you the final formula. Then you can also input the values of your variables and the Δ (margin of error) of the variables. 
+You enter your expression and the app shows you the final formula. Then you can also input the values of your variables and the Δ (margin of error) of the variables. 
 
 This app is especially useful for students that study physics.
 
